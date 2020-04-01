@@ -1,10 +1,11 @@
 import React from "react";
+import AssignList from "./pages/AssignmentList";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>Assignment APP</h1>
+      <AssignList />
     </div>
   );
 }
