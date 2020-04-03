@@ -29,7 +29,7 @@ class AssignList extends React.Component {
             <h2>Assignment list</h2>
             <div className="Card-list-wrapper">
               {this.state.data.map(res => (
-                <div className="card-border-wrapper">
+                <div className="card-border-wrapper" key={res.id}>
                   <Card>
                     <h3>{res.title}</h3>
                     <div className="date-wrapper">
