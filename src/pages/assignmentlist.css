@@ -1,4 +1,25 @@
-.site-card-wrapper {
+/* .site-page-header {
+  border: 1px solid #e8e8e8;
+} */
+
+.site-card-border-less-wrapper {
   background: #ececec;
   padding: 30px;
+}
+
+.Card-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e8e8e8;
+  padding: 18px 45px;
+}
+
+.card-border-wrapper {
+  margin-bottom: 10px;
+}
+
+.date-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
 }
