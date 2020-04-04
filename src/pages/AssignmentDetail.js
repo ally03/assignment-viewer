@@ -2,9 +2,16 @@ import React from "react";
 import { Modal } from "antd";
 
 class AssignDetail extends React.Component {
+  assignComplete() {
+    if (this.props.assign.detail.isComplete === true) {
+      return "Completed";
+    } else {
+      return "InComplete";
+    }
+  }
   render() {
     const assignInDetail = this.props.assign.detail;
-    console.log(assignInDetail, "dsdgpjf");
+    const removePtag = assignInDetail.details.replace(/<[^>]+>/g, "");
     return (
       <div>
         <Modal
@@ -12,9 +19,23 @@ class AssignDetail extends React.Component {
           visible={this.props.assign.open}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          okText={this.assignComplete()}
         >
-          {assignInDetail.details}
-          <p>{assignInDetail.id}</p>
+          <p>Assignment Detail: {removePtag}</p>
+          <div>
+            <p>Start On : {assignInDetail.setOn}</p>
+            <p>Complete On : {assignInDetail.deadline}</p>
+          </div>
+          <div>
+            <h4>Given By</h4>
+            <p>
+              First Name : {assignInDetail.setBy.title}{" "}
+              {assignInDetail.setBy.firstName}
+            </p>
+            <p>Last Name : {assignInDetail.setBy.lastName}</p>
+            <p>Last Name : {assignInDetail.setBy.email}</p>
+            <p>School Name: {assignInDetail.groups[0].school.name}</p>
+          </div>
         </Modal>
       </div>
     );

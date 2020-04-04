@@ -17,7 +17,7 @@ class AssignList extends React.Component {
     this.wrapper = React.createRef();
   }
   async componentDidMount() {
-    const dataOnMount = await getAllAssignments("hafiz");
+    const dataOnMount = await getAllAssignments();
     this.setState({ data: dataOnMount.items });
   }
 
@@ -27,7 +27,6 @@ class AssignList extends React.Component {
       open: !this.state.open,
       detail: getDetail
     });
-    console.log("id", this.state, id);
   }
 
   render() {
