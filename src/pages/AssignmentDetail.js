@@ -3,20 +3,20 @@ import { Modal } from "antd";
 
 class AssignDetail extends React.Component {
   assignComplete() {
-    if (this.props.assign.detail.isComplete === true) {
+    if (this.props.assignmentDetail.details.isComplete === true) {
       return "Completed";
     } else {
       return "InComplete";
     }
   }
   render() {
-    const assignInDetail = this.props.assign.detail;
+    const assignInDetail = this.props.assignmentDetail;
     const removePtag = assignInDetail.details.replace(/<[^>]+>/g, "");
     return (
       <div>
         <Modal
           title={assignInDetail.title}
-          visible={this.props.assign.open}
+          visible={this.props.status}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           okText={this.assignComplete()}

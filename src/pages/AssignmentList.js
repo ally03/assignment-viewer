@@ -9,28 +9,27 @@ class AssignList extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: [],
-      open: false,
-      detail: []
+      assignmentlist: [],
+      status: false,
+      assignmentDetail: undefined
     };
     this.handleClick = this.handleClick.bind(this);
-    this.wrapper = React.createRef();
   }
   async componentDidMount() {
-    const dataOnMount = await getAllAssignments();
-    this.setState({ data: dataOnMount.items });
+    const assignmentlist = await getAllAssignments();
+    this.setState({ assignmentlist: assignmentlist.items });
   }
 
   async handleClick(id) {
-    const getDetail = await getAllAssignmentsDetails(id);
+    const assignmentDetail = await getAllAssignmentsDetails(id);
     this.setState({
-      open: !this.state.open,
-      detail: getDetail
+      status: true,
+      assignmentDetail
     });
   }
 
   render() {
-    if (this.state.data.length > 0) {
+    if (this.state.assignmentlist.length > 0) {
       return (
         <div>
           <PageHeader
@@ -41,17 +40,13 @@ class AssignList extends React.Component {
           <div className="site-card-border-less-wrapper">
             <h2>Assignment list</h2>
             <div className="Card-list-wrapper">
-              {this.state.data.map(res => (
+              {this.state.assignmentlist.map(res => (
                 <div className="card-border-wrapper" key={res.id}>
                   <Card
                     hoverable
                     className="assignment"
-                    ref={this.wrapper}
                     onClick={() => this.handleClick(res.id)}
                   >
-                    {this.state.open ? (
-                      <AssignDetail assign={this.state} />
-                    ) : null}
                     <h3>
                       {res.title} id: {res.id}
                     </h3>
@@ -63,6 +58,12 @@ class AssignList extends React.Component {
                 </div>
               ))}
             </div>
+            {this.state.status ? (
+              <AssignDetail
+                assignmentDetail={this.state.assignmentDetail}
+                status={this.state.status}
+              />
+            ) : null}
           </div>
         </div>
       );
