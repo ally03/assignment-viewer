@@ -23,3 +23,13 @@
   justify-content: space-around;
   flex-flow: wrap;
 }
+
+.assignment {
+    background-position: center;
+    transition: background 0.8s;
+}
+
+.assignment:active {
+    top:2px;
+    background-size: 100%;
+}

@@ -30,7 +30,7 @@ class AssignList extends React.Component {
             <div className="Card-list-wrapper">
               {this.state.data.map(res => (
                 <div className="card-border-wrapper" key={res.id}>
-                  <Card>
+                  <Card hoverable className="assignment">
                     <h3>{res.title}</h3>
                     <div className="date-wrapper">
                       <h4>Start On : {res.setOn}</h4>
