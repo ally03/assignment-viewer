@@ -17,8 +17,10 @@ class AssignList extends React.Component {
         this.handleModal = this.handleModal.bind(this);
     }
     async componentDidMount() {
-        const assignmentlist = await getAllAssignments();
-        this.setState({ assignmentlist: assignmentlist.items });
+        let assignmentlist = await getAllAssignments();
+        debugger;
+        assignmentlist = assignmentlist.items.sort((date1, date2) => (new Date(date1.setOn) - new Date(date2.setOn)));
+        this.setState({ assignmentlist });
     }
 
     async handleClick(id) {
@@ -34,7 +36,18 @@ class AssignList extends React.Component {
         });
     }
 
+    getHumanReadableDateTime(time) {
+        return new Date(time).toLocaleString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            weekday: 'short',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        })
+    }
     render() {
+        console.log(this.state.assignmentlist);
         if (this.state.assignmentlist.length > 0) {
             return (
                 <div>
@@ -54,8 +67,8 @@ class AssignList extends React.Component {
                             <List.Item>
                                 <Card className='assignment' onClick={() => this.handleClick(item.id)}>
                                     <div className="date-wrapper">
-                                        <h4>Start On : {item.setOn}</h4>
-                                        <h4>Complete On : {item.deadline}</h4>
+                                        <h4>Start On : {this.getHumanReadableDateTime(item.setOn)}</h4>
+                                        <h4>Complete On : {this.getHumanReadableDateTime(item.deadline)}</h4>
                                     </div></Card>
                             </List.Item>
                         )}
