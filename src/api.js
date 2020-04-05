@@ -5,8 +5,8 @@ export async function getAllAssignments() {
 }
 
 export async function getAllAssignmentsDetails(id) {
-  const response = await fetch(
+  return await fetch(
+    // "https://beehiveapi.lionhearttrust.org.uk/v3.5/planner/users/d70cbe8d-11ac-e811-80e2-005056a23846/assignments/195212313"
     `https://beehiveapi.lionhearttrust.org.uk/v3.5/planner/users/d70cbe8d-11ac-e811-80e2-005056a23846/assignments/${id}`
   );
-  return response.json();
 }
