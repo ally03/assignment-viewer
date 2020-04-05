@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button } from "antd";
 
-class AssignDetail extends React.Component {
+class AssignmentDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,4 +67,4 @@ class AssignDetail extends React.Component {
   }
 }
 
-export default AssignDetail;
+export default AssignmentDetail;
