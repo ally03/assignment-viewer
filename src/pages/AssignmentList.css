@@ -1,4 +1,6 @@
-
+.assignment {
+    cursor: pointer;
+}
 .assignment:active {
     top:2px;
 }
