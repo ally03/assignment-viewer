@@ -11,14 +11,27 @@ class AssignList extends React.Component {
       assignmentlist: [],
       status: false,
       assignmentDetail: undefined,
-      isLoading: false
+      isLoading: false,
+      error: false,
+      errorMessage: {}
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleModal = this.handleModal.bind(this);
   }
   async componentDidMount() {
-    const assignmentlist = await getAllAssignments();
-    this.setState({ assignmentlist: assignmentlist.items });
+    const response = await getAllAssignments();
+    if (response.status === 200) {
+      const assignmentlist = await response.json();
+      this.setState({ assignmentlist: assignmentlist.items });
+    } else {
+      this.setState({
+        error: true,
+        errorMessage: {
+          errorText: response.statusText,
+          errorCode: response.status
+        }
+      });
+    }
   }
 
   async handleClick(id) {
@@ -35,10 +48,19 @@ class AssignList extends React.Component {
   }
 
   render() {
+    if (this.state.error) {
+      console.log("pae5", this.response);
+      return (
+        <h1>
+          {this.state.errorMessage.errorCode}{" "}
+          {this.state.errorMessage.errorText}
+        </h1>
+      );
+    }
     if (this.state.assignmentlist.length > 0) {
       return (
         <div>
-          <h2>Assignment list</h2>
+          <h2>Assignment list</h2>;
           <List
             style={{ padding: "10px" }}
             grid={{

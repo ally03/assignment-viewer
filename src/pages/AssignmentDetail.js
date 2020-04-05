@@ -25,7 +25,6 @@ class AssignmentDetail extends React.Component {
     }
   }
   render() {
-    console.log("this state", this.state);
     const assignInDetail = this.props.assignmentDetail;
     const removePtag = assignInDetail.details.replace(/<[^>]+>/g, "");
     return (
