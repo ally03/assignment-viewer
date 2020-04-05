@@ -34,15 +34,11 @@ class AssignmentDetail extends React.Component {
           title={assignInDetail.title}
           visible={this.state.visible}
           footer={[
-            <Button
-              key={this.assignComplete()}
-              type="primary"
-              onClick={this.handleComplete}
-            >
-              Submit
+            <Button key="submit" type="primary" onClick={this.handleComplete}>
+              {this.assignComplete()}
             </Button>,
             <Button key="Close" onClick={this.props.hideModal}>
-              Return
+              Close
             </Button>
           ]}
         >
