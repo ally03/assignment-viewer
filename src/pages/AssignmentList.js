@@ -14,6 +14,7 @@ class AssignList extends React.Component {
       assignmentDetail: undefined
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleModal = this.handleModal.bind(this);
   }
   async componentDidMount() {
     const assignmentlist = await getAllAssignments();
@@ -25,6 +26,12 @@ class AssignList extends React.Component {
     this.setState({
       status: true,
       assignmentDetail
+    });
+  }
+
+  handleModal() {
+    this.setState({
+      status: false
     });
   }
 
@@ -62,6 +69,7 @@ class AssignList extends React.Component {
               <AssignDetail
                 assignmentDetail={this.state.assignmentDetail}
                 status={this.state.status}
+                hideModal={this.handleModal}
               />
             ) : null}
           </div>

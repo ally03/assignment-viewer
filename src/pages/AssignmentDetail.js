@@ -2,6 +2,10 @@ import React from "react";
 import { Modal } from "antd";
 
 class AssignDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { visible: props.status };
+  }
   assignComplete() {
     if (this.props.assignmentDetail.details.isComplete === true) {
       return "Completed";
@@ -16,9 +20,9 @@ class AssignDetail extends React.Component {
       <div>
         <Modal
           title={assignInDetail.title}
-          visible={this.props.status}
+          visible={this.state.visible}
           onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          onCancel={this.props.hideModal}
           okText={this.assignComplete()}
         >
           <p>Assignment Detail: {removePtag}</p>
