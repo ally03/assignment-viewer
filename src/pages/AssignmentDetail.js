@@ -1,19 +1,31 @@
 import React from "react";
-import { Modal } from "antd";
+import { Modal, Button } from "antd";
 
 class AssignDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: props.status };
+    this.state = {
+      visible: props.status,
+      complete: false,
+      completeId: ""
+    };
+    this.handleComplete = this.handleComplete.bind(this);
+  }
+  handleComplete() {
+    this.setState({
+      complete: true,
+      completeId: this.props.assignmentDetail.id
+    });
   }
   assignComplete() {
-    if (this.props.assignmentDetail.details.isComplete === true) {
+    if (this.state.complete === true) {
       return "Completed";
     } else {
       return "InComplete";
     }
   }
   render() {
+    console.log("this state", this.state);
     const assignInDetail = this.props.assignmentDetail;
     const removePtag = assignInDetail.details.replace(/<[^>]+>/g, "");
     return (
@@ -21,9 +33,18 @@ class AssignDetail extends React.Component {
         <Modal
           title={assignInDetail.title}
           visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.props.hideModal}
-          okText={this.assignComplete()}
+          footer={[
+            <Button
+              key={this.assignComplete()}
+              type="primary"
+              onClick={this.handleComplete}
+            >
+              Submit
+            </Button>,
+            <Button key="Close" onClick={this.props.hideModal}>
+              Return
+            </Button>
+          ]}
         >
           <p>Assignment Detail: {removePtag}</p>
           <div>
