@@ -27,7 +27,7 @@ class AssignList extends React.Component {
       this.setState({
         error: true,
         errorMessage: {
-          errorText: response.statusText,
+          errorText: "There was an error in getting your assignments.",
           errorCode: response.status
         }
       });
@@ -35,11 +35,23 @@ class AssignList extends React.Component {
   }
 
   async handleClick(id) {
-    const assignmentDetail = await getAllAssignmentsDetails(id);
-    this.setState({
-      status: true,
-      assignmentDetail
-    });
+    const responseDetail = await getAllAssignmentsDetails(id);
+    console.log("responseDetail:", responseDetail);
+    if (responseDetail.status === 200) {
+      const assignmentDetail = await responseDetail.json();
+      this.setState({
+        status: true,
+        assignmentDetail
+      });
+    } else {
+      this.setState({
+        error: true,
+        errorMessage: {
+          errorText: "An error occurred while getting the assignment details.",
+          errorCode: responseDetail.status
+        }
+      });
+    }
   }
   handleModal() {
     this.setState({
@@ -49,7 +61,6 @@ class AssignList extends React.Component {
 
   render() {
     if (this.state.error) {
-      console.log("pae5", this.response);
       return (
         <h1>
           {this.state.errorMessage.errorCode}{" "}
