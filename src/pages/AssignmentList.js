@@ -3,6 +3,7 @@ import { Card, List } from "antd";
 import { getAllAssignments, getAllAssignmentsDetails } from "api";
 import AssignmentDetail from "./AssignmentDetail";
 import "./AssignmentList.css";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 class AssignList extends React.Component {
   constructor() {
@@ -11,22 +12,47 @@ class AssignList extends React.Component {
       assignmentlist: [],
       status: false,
       assignmentDetail: undefined,
-      isLoading: false
+      isLoading: false,
+      error: false,
+      errorMessage: {}
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleModal = this.handleModal.bind(this);
   }
   async componentDidMount() {
-    const assignmentlist = await getAllAssignments();
-    this.setState({ assignmentlist: assignmentlist.items });
+    const response = await getAllAssignments();
+    if (response.status === 200) {
+      const assignmentlist = await response.json();
+      this.setState({ assignmentlist: assignmentlist.items });
+    } else {
+      this.setState({
+        error: true,
+        errorMessage: {
+          errorText: "There was an error in getting your assignments.",
+          errorCode: response.status
+        }
+      });
+    }
   }
 
   async handleClick(id) {
-    const assignmentDetail = await getAllAssignmentsDetails(id);
-    this.setState({
-      status: true,
-      assignmentDetail
-    });
+    const responseDetail = await getAllAssignmentsDetails(id);
+    console.log("responseDetail:", responseDetail);
+    if (responseDetail.status === 200) {
+      const assignmentDetail = await responseDetail.json();
+      this.setState({
+        status: true,
+        assignmentDetail
+      });
+    } else {
+      this.setState({
+        error: true,
+        errorMessage: {
+          errorText: "An error occurred while getting the assignment details.",
+          errorCode: responseDetail.status
+        }
+      });
+    }
   }
   handleModal() {
     this.setState({
@@ -35,10 +61,18 @@ class AssignList extends React.Component {
   }
 
   render() {
+    if (this.state.error) {
+      return (
+        <h1>
+          {this.state.errorMessage.errorCode}{" "}
+          {this.state.errorMessage.errorText}
+        </h1>
+      );
+    }
     if (this.state.assignmentlist.length > 0) {
       return (
         <div>
-          <h2>Assignment list</h2>
+          <h2>Assignment list</h2>;
           <List
             style={{ padding: "10px" }}
             grid={{
@@ -58,9 +92,15 @@ class AssignList extends React.Component {
                   title={item.title}
                   onClick={() => this.handleClick(item.id)}
                 >
-                  <div className="date-wrapper">
-                    <h4>Start On : {item.setOn}</h4>
-                    <h4>Complete On : {item.deadline}</h4>
+                  <div className={"date-wrapper"}>
+                    <div>
+                      <h4>Start On : {item.setOn}</h4>
+                      <h4>Complete On : {item.deadline}</h4>
+                    </div>
+                    <div className="icon-wrapper">
+                      <p>Completed</p>{" "}
+                      <CheckCircleOutlined style={{ padding: "5px" }} />
+                    </div>
                   </div>
                 </Card>
               </List.Item>

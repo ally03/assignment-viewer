@@ -6,26 +6,22 @@ class AssignmentDetail extends React.Component {
     super(props);
     this.state = {
       visible: props.status,
-      complete: false,
-      completeId: ""
+      complete: {}
     };
     this.handleComplete = this.handleComplete.bind(this);
   }
   handleComplete() {
     this.setState({
-      complete: true,
-      completeId: this.props.assignmentDetail.id
+      complete: {
+        assignComplete: true,
+        completeId: this.props.assignmentDetail.id
+      }
     });
   }
   assignComplete() {
-    if (this.state.complete === true) {
-      return "Completed";
-    } else {
-      return "InComplete";
-    }
+    return this.state.complete.assignComplete ? "Completed" : "Incomplete";
   }
   render() {
-    console.log("this state", this.state);
     const assignInDetail = this.props.assignmentDetail;
     const removePtag = assignInDetail.details.replace(/<[^>]+>/g, "");
     return (
