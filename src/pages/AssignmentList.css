@@ -1,6 +1,18 @@
 .assignment {
-    cursor: pointer;
+  cursor: pointer;
 }
 .assignment:active {
-    top:2px;
+  top: 2px;
+}
+
+.date-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  color: #52c41a;
+  padding: 10px;
 }

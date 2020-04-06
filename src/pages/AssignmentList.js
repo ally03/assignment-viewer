@@ -3,6 +3,7 @@ import { Card, List } from "antd";
 import { getAllAssignments, getAllAssignmentsDetails } from "api";
 import AssignmentDetail from "./AssignmentDetail";
 import "./AssignmentList.css";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 class AssignList extends React.Component {
   constructor() {
@@ -91,9 +92,15 @@ class AssignList extends React.Component {
                   title={item.title}
                   onClick={() => this.handleClick(item.id)}
                 >
-                  <div className="date-wrapper">
-                    <h4>Start On : {item.setOn}</h4>
-                    <h4>Complete On : {item.deadline}</h4>
+                  <div className={"date-wrapper"}>
+                    <div>
+                      <h4>Start On : {item.setOn}</h4>
+                      <h4>Complete On : {item.deadline}</h4>
+                    </div>
+                    <div className="icon-wrapper">
+                      <p>Completed</p>{" "}
+                      <CheckCircleOutlined style={{ padding: "5px" }} />
+                    </div>
                   </div>
                 </Card>
               </List.Item>
